@@ -162,7 +162,7 @@ tail -f logs/skull_service_*.log
 - If the service exits on startup, check Python package installation and any tracebacks in the `logs/` directory.
 - Ensure the uploaded file extension is `.nii` or `.nii.gz`.
 
-## N
+## Notes
 - Temporary uploaded files are created in the system temp directory and removed after processing.
 - Output file naming: `<original_basename>_stripped.nii(.gz)` (saved in `processed_nifti/`).
 
