@@ -22,6 +22,86 @@ python3 -m pip install fastapi uvicorn
 ```
 
 - System dependency: `mri_synthstrip` (part of SynthStrip / FreeSurfer toolchain). Make sure it is installed and available on the PATH.
+  # FreeSurfer (SynthStrip) Installation Guide for WSL
+  
+  
+  ## **1. Download FreeSurfer Tarball**
+  
+  Download FreeSurfer using `wget` inside WSL:
+  
+  ```bash
+  wget https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/7.3.2/freesurfer-linux-ubuntu20_amd64-7.3.2.tar.gz
+  ```
+  
+  If downloaded via a Windows browser, it will be stored at:
+  
+  ```
+  /mnt/c/Users/AdityaGandhi/Downloads/pet_scan/Data_Validation_Pipeline/
+  ```
+  
+  ---
+  
+  ## **2. Extract FreeSurfer in WSL**
+  
+  ### **Create installation directory:**
+  
+  ```bash
+  sudo mkdir -p /opt/freesurfer
+  ```
+  
+  ### **Extract the tarball to /opt:**
+  
+  ```bash
+  sudo tar -xzvf /mnt/c/Users/AdityaGandhi/Downloads/pet_scan/Data_Validation_Pipeline/freesurfer-linux-ubuntu20_amd64-7.3.2.tar.gz -C /opt
+  ```
+  
+  After extraction, FreeSurfer will be located at:
+  
+  ```
+  /opt/freesurfer/
+  ```
+  
+  ---
+  ## **3. Configure FreeSurfer Environment**
+  
+  Add environment variables to your `~/.bashrc`:
+  
+  ```bash
+  echo "export FREESURFER_HOME=/opt/freesurfer" >> ~/.bashrc
+  echo "source \$FREESURFER_HOME/SetUpFreeSurfer.sh" >> ~/.bashrc
+  ```
+  
+  Reload your shell:
+  
+  ```bash
+  source ~/.bashrc
+  ```
+  
+  ---
+  
+  ## **4. Verify Installation**
+  
+  Check location of SynthStrip:
+  
+  ```bash
+  which mri_synthstrip
+  ```
+  
+  This should output a path under `/opt/freesurfer/bin`.
+  
+  Check SynthStrip help:
+  
+  ```bash
+  mri_synthstrip --help
+  ```
+  
+  If the help message appears, SynthStrip is correctly installed.
+  
+  ---
+  
+  ## **✔ Completed**
+  
+  FreeSurfer and SynthStrip are now properly installed and ready for use .
 
 ## Running the Service
 You can either run the script directly or use `uvicorn`:
@@ -82,7 +162,7 @@ tail -f logs/skull_service_*.log
 - If the service exits on startup, check Python package installation and any tracebacks in the `logs/` directory.
 - Ensure the uploaded file extension is `.nii` or `.nii.gz`.
 
-## Notes
+## N
 - Temporary uploaded files are created in the system temp directory and removed after processing.
 - Output file naming: `<original_basename>_stripped.nii(.gz)` (saved in `processed_nifti/`).
 
